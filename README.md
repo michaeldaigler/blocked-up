@@ -1,5 +1,5 @@
 Clone repo : git cone git@github.com:michaeldaigler/blocked-up.git
-cd to blocked-up
+* cd to blocked-up
 
 # Back-end set up
 
