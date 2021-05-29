@@ -1,5 +1,5 @@
 
-import React, { ChangeEvent, useContext, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import {PasswordManagerContext} from "./hardhat/SymfoniContext"
 import "./PasswordManager.css"
 
@@ -11,6 +11,15 @@ const PasswordManagerHome: React.FC = () => {
     const [userPassword, setUserPassword] = useState("");
     const [inputType, setInputType] = useState('password')
 
+    // useEffect(() => {
+    //     const doAsync = async () => {
+    //         if (!passwordManagerContract.instance) return
+    //         console.log("Greeter is deployed at ", passwordManagerContract.instance.address)
+    //         setUserPassword(await passwordManagerContract.instance.getPassword('account1'))
+
+    //     };
+    //     doAsync();
+    // },[passwordManagerContract])
 
     const PASSWORD_REGEX = new RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")
     const passwordInputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,14 +67,14 @@ const PasswordManagerHome: React.FC = () => {
         <div className="app">
 
         <div className="home-container">
-        <div className="user-address">Hello: {accounts[0]}</div>
+        <div className="user-address">Hello: {}</div>
           <div className="password">
             {/* <div className="set-password-info-container"> */}
             <input className="password-input" type={inputType } value={userInputPassword} onChange={passwordInputChangedHandler} />
             <button onClick={showPasswordClicked}>Show Password</button>
             <button className="set-password-button" onClick={handleSetUserPassword}>Set password</button>
             <button onClick={getUserPassword}>Get Password</button>
-            <span>{userPassword }</span>
+           <div> Your password: <span>{userPassword}</span></div>
               {/* </div> */}
           </div>
           <div className="home-body">
