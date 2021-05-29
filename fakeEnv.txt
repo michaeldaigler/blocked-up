@@ -1,0 +1,12 @@
+### remove the '#' to use the environment variables
+export PRIVATE_KEY=<YOUR_INFURA_PRIVATE_KEY>
+export WEB3_INFURA_PROJECT_ID=<YOUR_INFURA_ID>
+export INFURA_RINKEBY_ENDPOINT=https://mainnet.infura.io/v3/<YOUR_ID>
+
+
+### Optional - don't uncomment if you don't know what they do!
+export ETHERSCAN_TOKEN=XYRP4BUUSCJV48TJDS72TDH5EVFVPB5159
+# export IPFS_URL=http://127.0.0.1:5001
+# export UPLOAD_IPFS=true
+# export PINATA_API_KEY='asdfasdfs'
+# export PINATA_API_SECRET='asdfasdfsdf'
