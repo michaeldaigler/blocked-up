@@ -4,25 +4,26 @@ import React, { useEffect, useState } from "react";
 import PasswordManagerContract from './artifacts/contracts/PasswordManager.sol/PasswordManager.json';
 import getWeb3 from "./getWeb3";
 import BlockchainContext from "./BlockchainContext"
-import {Button, Grid, Input} from "@material-ui/core"
+import {Button, Checkbox, Grid, Input} from "@material-ui/core"
 import ipfs from './ipfs';
 import axios from "axios"
-
+import regex from 'regex'
 
 function Dapp() {
   const [web3, setWeb3] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [passwordManagerContract, setPasswordManagerContract] = useState(null);
   const [userInputPassword, setUserInputPassword] = useState("");
-  const [userPassword, setUserPassword] = useState();
+  const [userPassword, setUserPassword] = useState("");
   const [tokenInfo, setTokenInfo] = useState({
     name: "",
     external_link_hash: "",
     description: ""
   });
+  const [inputType, setInputType] = useState('password')
   const [buffer, setBuffer] = useState(null);
   const [tokenURIInput, setTokenURIInput] = useState("")
-
+  const PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
 
 
   const handleChooseFile = (event) => {
@@ -44,10 +45,16 @@ function Dapp() {
   const passwordInputChangedHandler = (event) => {
     setUserInputPassword(event.target.value)
   }
+  const showPasswordClicked = () => {
+    setInputType(prevType => prevType === 'password' ? 'text' : 'password');
+  }
 
   const handleSetUserPassword = () => {
     if (userInputPassword.trim('').length === 0) {
-      alert("Please enter a password")
+      alert("Password not entered")
+    }
+    if (PASSWORD_REGEX.test(userInputPassword) === false) {
+      alert("Minimum eight characters, at least one letter, one number and one special character")
     }
     setUserPassword(userInputPassword);
   }
@@ -111,7 +118,8 @@ function Dapp() {
         <div className="user-address">Hello: {accounts[0]}</div>
           <div className="password">
             {/* <div className="set-password-info-container"> */}
-            <input className="password-input" type="text" value={userInputPassword} onChange={passwordInputChangedHandler }/>
+            <input className="password-input" type={inputType } value={userInputPassword} onChange={passwordInputChangedHandler} />
+            <button onClick={showPasswordClicked}>Show Password</button>
               <button className="set-password-button" onClick={handleSetUserPassword}>Set password</button>
               {/* </div> */}
           </div>
@@ -123,19 +131,7 @@ function Dapp() {
         <button >Retrieve Token info by id</button>
         <input type="text" value={tokenURIInput} onChange={(e) => setTokenURIInput(e.target.value)} width={50}/>
         {/* <div>Info: { tokenInfo !== null && tokenInfo.name}</div> */}
-        <BlockchainContext.Consumer >
-          {state => (
-            <>
-              <div>Info:
-                <p>Name: {state.tokenInfo.name}</p>
-                <p> Description:{state.tokenInfo.description}</p>
-                <p></p>
-               <a href={`https://gateway.pinata.cloud/ipfs/${state.tokenInfo.external_link_hash}`}> <img alt={''} src={`https://gateway.pinata.cloud/ipfs/${state.tokenInfo.external_link_hash}`} height={200} width={200}/></a>
-              </div>
-        </>
-            )}
 
-          </BlockchainContext.Consumer>
       </div>
       </BlockchainContext.Provider>
   );
