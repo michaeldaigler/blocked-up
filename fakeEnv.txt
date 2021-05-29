@@ -5,7 +5,7 @@ export INFURA_RINKEBY_ENDPOINT=https://mainnet.infura.io/v3/<YOUR_ID>
 
 
 ### Optional - don't uncomment if you don't know what they do!
-export ETHERSCAN_TOKEN=XYRP4BUUSCJV48TJDS72TDH5EVFVPB5159
+# export ETHERSCAN_TOKEN=<YOUR_TOKEN>
 # export IPFS_URL=http://127.0.0.1:5001
 # export UPLOAD_IPFS=true
 # export PINATA_API_KEY='asdfasdfs'

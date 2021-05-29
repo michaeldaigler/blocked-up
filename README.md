@@ -6,7 +6,8 @@ Clone repo : git cone git@github.com:michaeldaigler/blocked-up.git
 in root directory
 * install packages : npm i
 * create environment file : touch .env
-* add default credentials in "fakeEnv.txt" file.
+* add default credentials in "fakeEnv.txt" file
+### See Infura to get set up with the required keys : https://infura.io
 * change "fakeEnv.txt" to ".env" and remove the ".txt"
 ### in the terminal, make the environment available for current seesion : source .env
 * compile : npx hardhat compile
