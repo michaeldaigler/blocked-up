@@ -16,7 +16,7 @@ in root directory
 cd to password-manager
 * install packages : npm i
 * build : npm run build
-run : npm run start 
+* run : npm run start 
 
 
 
