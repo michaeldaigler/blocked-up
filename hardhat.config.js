@@ -10,7 +10,6 @@ task("accounts", "Prints the list of accounts", async () => {
   }
 });
 const path = require('path')
-
 // You need to export an object to set up your config
 // Go to https://hardhat.org/config/ to learn more
 
@@ -26,6 +25,7 @@ module.exports = {
 
   networks: {
     hardhat: {
+      accounts: ["0x522dB1211a0964A5c9DBE362741ca9c48C01394B"]
     },
     rinkeby: {
       url: RINKEBY_ENDPOINT,

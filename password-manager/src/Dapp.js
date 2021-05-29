@@ -23,7 +23,7 @@ function Dapp() {
   const [inputType, setInputType] = useState('password')
   const [buffer, setBuffer] = useState(null);
   const [tokenURIInput, setTokenURIInput] = useState("")
-  const PASSWORD_REGEX = "^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$"
+  const PASSWORD_REGEX = new RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")
 
 
   const handleChooseFile = (event) => {
@@ -49,14 +49,29 @@ function Dapp() {
     setInputType(prevType => prevType === 'password' ? 'text' : 'password');
   }
 
-  const handleSetUserPassword = () => {
+  const handleSetUserPassword = async () => {
     if (userInputPassword.trim('').length === 0) {
       alert("Password not entered")
     }
-    if (PASSWORD_REGEX.test(userInputPassword) === false) {
-      alert("Minimum eight characters, at least one letter, one number and one special character")
-    }
-    setUserPassword(userInputPassword);
+    // if (PASSWORD_REGEX.test(userInputPassword) === false) {
+    //   console.log(userInputPassword)
+    //   alert("Minimum eight characters, at least one letter, one number and one special character")
+    // }
+
+    let response = await passwordManagerContract.methods.setPassword(userInputPassword, 'account1').call().then((err, result) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(response)
+    })
+
+
+  }
+
+  const getUserPassword = async() => {
+    let password = await passwordManagerContract.methods.getPassword(accounts[0]);
+    console.log(password)
+    setUserPassword(password)
   }
 
   useEffect(() => {
@@ -120,16 +135,15 @@ function Dapp() {
             {/* <div className="set-password-info-container"> */}
             <input className="password-input" type={inputType } value={userInputPassword} onChange={passwordInputChangedHandler} />
             <button onClick={showPasswordClicked}>Show Password</button>
-              <button className="set-password-button" onClick={handleSetUserPassword}>Set password</button>
+            <button className="set-password-button" onClick={handleSetUserPassword}>Set password</button>
+            <button onClick={getUserPassword}>Get Password</button>
+            <span>{userPassword }</span>
               {/* </div> */}
           </div>
           <div className="home-body">
           Welcome to B<strong>Locked Up</strong>
           </div>
         </div>
-
-        <button >Retrieve Token info by id</button>
-        <input type="text" value={tokenURIInput} onChange={(e) => setTokenURIInput(e.target.value)} width={50}/>
         {/* <div>Info: { tokenInfo !== null && tokenInfo.name}</div> */}
 
       </div>
