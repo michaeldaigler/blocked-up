@@ -1,0 +1,90 @@
+
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300);
+body {
+	background: linear-gradient(-45deg, #3eadcf, #a88beb, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+	0% {
+		background-position: 0% 50%;
+	}
+	50% {
+		background-position: 100% 50%;
+	}
+	100% {
+		background-position: 0% 50%;
+	}
+}
+
+.app {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: auto 260px 1fr;
+  grid-template-rows: auto 150px 1fr;
+}
+
+.home-container {
+  display: grid;
+  grid-template:  "user-address"
+                  "password"
+                  "home-body";
+  justify-content: center;
+}
+
+.user-address {
+  grid-area: "user-address";
+}
+
+.password {
+  grid-area: "password";
+  width: 100%;
+  height: 300px;
+  display: block;
+  flex-direction: row;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.home-body {
+  grid-area: "home-body";
+  width: 100%;
+  height: 500px;
+  font-family: "Source Sans Pro";
+  font-size: 48px;
+  color:aliceblue
+}
+.set-password-info-container {
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  width: 200px;
+}
+.password-input {
+  width:50%;
+  height: 30px;
+  padding: 4px;
+  border-radius: 4px;
+  border: none;
+  align-self: center;
+}
+.set-password-button {
+  background-color: #7ee8fa;
+  background-image: linear-gradient(315deg, #7ee8fa 0%, #80ff72 74%);
+  border: none;
+  align-self: center;
+  border-radius: 12px;
+  width: 100px;
+  height: 40px;
+  top: 80%;
+
+}
+.set-password-button:hover {
+  cursor: pointer;
+}
