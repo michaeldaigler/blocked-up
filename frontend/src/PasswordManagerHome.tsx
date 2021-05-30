@@ -1,31 +1,40 @@
 
-<<<<<<< HEAD
-import React, { ChangeEvent, useContext, useState } from "react";
-import { PasswordManagerContext } from "./hardhat/SymfoniContext"
+import React, { ChangeEvent, useEffect, useContext, useState } from "react";
+import { PasswordManagerContext, SignerContext } from "./hardhat/SymfoniContext"
 import BLockedUpLogo from "./assets/BlockedUpLogo.png"
-=======
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
-import {PasswordManagerContext} from "./hardhat/SymfoniContext"
->>>>>>> hardhat-bp-proj
+import { encrypt, decrypt, encryptPassword, decryptPassword } from "./encryption/passwordEncryption";
+import {recoverPersonalSignature} from "eth-sig-util"
 import "./PasswordManager.css"
+import { Signer } from "crypto";
+import { bitArray } from "sjcl";
+import { sha224 , sha256} from "js-sha256";
+import { SigningKey } from "@ethersproject/signing-key";
+import { ethers } from "ethers";
 
 const PasswordManagerHome: React.FC = () => {
     const [accounts, setAccounts] = useState([]);
     const passwordManagerContract = useContext(PasswordManagerContext)
+    const signerContext = useContext(SignerContext);
 
     const [userInputPassword, setUserInputPassword] = useState("");
     const [userPassword, setUserPassword] = useState("");
     const [inputType, setInputType] = useState('password')
+    const [_provider, setProvider] = useState(ethers.providers.Web3Provider.prototype);
+    const [_signer, setSigner] = useState('');
+    useEffect(() => {
+        const setUpWeb3 = async () => {
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const jsonRpcProvider = new ethers.providers.JsonRpcProvider()
+             jsonRpcProvider.listAccounts().then((res: string[]) => {
+                setSigner(res[0]);
+            })
 
-    // useEffect(() => {
-    //     const doAsync = async () => {
-    //         if (!passwordManagerContract.instance) return
-    //         console.log("Greeter is deployed at ", passwordManagerContract.instance.address)
-    //         setUserPassword(await passwordManagerContract.instance.getPassword('account1'))
+            console.log(jsonRpcProvider.listAccounts())
+        }
 
-    //     };
-    //     doAsync();
-    // },[passwordManagerContract])
+        setUpWeb3();
+        console.log(_signer)
+    },[passwordManagerContract])
 
     const PASSWORD_REGEX = new RegExp("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")
     const passwordInputChangedHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,17 +49,19 @@ const PasswordManagerHome: React.FC = () => {
         if (userInputPassword.trim().length === 0) {
           alert("Password not entered")
         }
-          console.log(passwordManagerContract)
-        // if (PASSWORD_REGEX.test(userInputPassword) === false) {
-        //   console.log(userInputPassword)
-        //   alert("Minimum eight characters, at least one letter, one number and one special character")
-        // }
+
+
           if (!passwordManagerContract.instance) {
               console.log("No password manager")
               return;
           }
           if (passwordManagerContract.instance) {
-            let tx = await passwordManagerContract.instance.setPassword(userInputPassword, 'account1')
+            //   let x = sha256(userInputPassword)
+            //   let y = sha256('account1')
+            //   let z = sha256(x.concat(y))
+              let x = encryptPassword(userInputPassword, _signer)
+              console.log('[SIGNER]', _signer)
+            let tx = await passwordManagerContract.instance.setPassword(x, 'account1')
               await tx.wait()
               console.log(tx)
           }
@@ -64,8 +75,11 @@ const PasswordManagerHome: React.FC = () => {
             console.log(passwordManagerContract.factory?.signer)
             let password = await passwordManagerContract.instance.getPassword('account1');
             console.log(password)
+            console.log('[SIGNER]', _signer)
+            let decryptedPassword = decryptPassword(password, _signer)
             if (password !== undefined) {
-                setUserPassword(password)
+                console.log(decryptedPassword)
+                setUserPassword(decryptedPassword)
             }
         }
       }
@@ -73,22 +87,15 @@ const PasswordManagerHome: React.FC = () => {
         <div className="app">
 
         <div className="home-container">
-<<<<<<< HEAD
-                <div className="user-address">Hello: {accounts[0]}</div>
-=======
-        <div className="user-address">Hello: {}</div>
->>>>>>> hardhat-bp-proj
+
+        <div className="user-address">Hello: {_signer}</div>
           <div className="password">
             {/* <div className="set-password-info-container"> */}
-            <input className="password-input" type={inputType } value={userInputPassword} onChange={passwordInputChangedHandler} />
+            <input className="password-input" id="passowrd" type={inputType } value={userInputPassword} onChange={passwordInputChangedHandler} />
             <button onClick={showPasswordClicked}>Show Password</button>
             <button className="set-password-button" onClick={handleSetUserPassword}>Set password</button>
             <button onClick={getUserPassword}>Get Password</button>
-<<<<<<< HEAD
-            <span>{userPassword}</span>
-=======
            <div> Your password: <span>{userPassword}</span></div>
->>>>>>> hardhat-bp-proj
               {/* </div> */}
           </div>
           <div className="home-body">

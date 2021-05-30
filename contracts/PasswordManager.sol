@@ -19,6 +19,11 @@ contract PasswordManager {
 
     event PasswordSet(string newPassword, address caller);
 
+    /**
+    @dev
+
+
+     */
     function widthraw(uint _amount) external payable {
         require(_amount <= address(this).balance, "Not enough");
         require(_amount < balances[msg.sender], "not enough funds.");
