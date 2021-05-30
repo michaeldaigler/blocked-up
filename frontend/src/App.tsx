@@ -11,7 +11,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Symfoni autoInit={true} >
-         <PasswordManagerHome />
+         <PasswordManagerHome></PasswordManagerHome>
           {/* <Greeter></Greeter> */}
         </Symfoni>
       </header>
