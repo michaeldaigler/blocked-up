@@ -2,7 +2,7 @@
 import React, { ChangeEvent, useEffect, useContext, useState } from "react";
 import { PasswordManagerContext, SignerContext } from "./hardhat/SymfoniContext"
 import BLockedUpLogo from "./assets/BlockedUpLogo.png"
-import { encrypt, decrypt, encryptPassword, decryptPassword } from "./encryption/passwordEncryption";
+import { encrypt, decrypt, encryptPassword, decryptPassword, encryptWithAES, decryptWithAES } from "./encryption/passwordEncryption";
 import {recoverPersonalSignature} from "eth-sig-util"
 import Button from 'react-bootstrap/Button';
 import "./PasswordManager.css"
@@ -11,7 +11,8 @@ import { bitArray } from "sjcl";
 import { sha224 , sha256} from "js-sha256";
 import { SigningKey } from "@ethersproject/signing-key";
 import { ethers } from "ethers";
-
+import ipfs, {client} from './ipfs';
+// import ipfs from "ipfs-http-client"
 
 const PasswordManagerHome: React.FC = () => {
     const [accounts, setAccounts] = useState([]);
@@ -61,10 +62,18 @@ const PasswordManagerHome: React.FC = () => {
             //   let x = sha256(userInputPassword)
             //   let y = sha256('account1')
             //   let z = sha256(x.concat(y))
-              let x = encryptPassword(userInputPassword, _signer)
+              let x = encryptWithAES(userInputPassword, _signer)
               console.log('[SIGNER]', _signer)
             let tx = await passwordManagerContract.instance.setPassword(x, 'account1')
               await tx.wait()
+              const buffer = new Buffer(x);
+              ipfs.files.add(buffer, async (err: any, res: any) => {
+                  if (err) {
+                      console.log(err)
+                      return
+                  }
+                  console.log(res)
+            })
               console.log(tx)
           }
 
@@ -78,7 +87,7 @@ const PasswordManagerHome: React.FC = () => {
             let password = await passwordManagerContract.instance.getPassword('account1');
             console.log(password)
             console.log('[SIGNER]', _signer)
-            let decryptedPassword = decryptPassword(password, _signer)
+            let decryptedPassword = decryptWithAES(password, _signer)
             if (password !== undefined) {
                 console.log(decryptedPassword)
                 setUserPassword(decryptedPassword)
