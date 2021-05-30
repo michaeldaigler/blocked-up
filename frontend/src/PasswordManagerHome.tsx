@@ -1,13 +1,11 @@
 
-<<<<<<< HEAD
 import React, { ChangeEvent, useContext, useState } from "react";
 import { PasswordManagerContext } from "./hardhat/SymfoniContext"
 import BLockedUpLogo from "./assets/BlockedUpLogo.png"
-=======
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
-import {PasswordManagerContext} from "./hardhat/SymfoniContext"
->>>>>>> hardhat-bp-proj
+import Button from 'react-bootstrap/Button';
+
 import "./PasswordManager.css"
+
 
 const PasswordManagerHome: React.FC = () => {
     const [accounts, setAccounts] = useState([]);
@@ -73,22 +71,14 @@ const PasswordManagerHome: React.FC = () => {
         <div className="app">
 
         <div className="home-container">
-<<<<<<< HEAD
                 <div className="user-address">Hello: {accounts[0]}</div>
-=======
-        <div className="user-address">Hello: {}</div>
->>>>>>> hardhat-bp-proj
           <div className="password">
             {/* <div className="set-password-info-container"> */}
             <input className="password-input" type={inputType } value={userInputPassword} onChange={passwordInputChangedHandler} />
-            <button onClick={showPasswordClicked}>Show Password</button>
-            <button className="set-password-button" onClick={handleSetUserPassword}>Set password</button>
-            <button onClick={getUserPassword}>Get Password</button>
-<<<<<<< HEAD
+            <Button onClick={showPasswordClicked} variant="secondary">Show password</Button>{' '}
+            <Button onClick={handleSetUserPassword} variant="primary">Set password</Button>{' '}
+            <Button onClick={getUserPassword} variant="success">Get password</Button>{' '}
             <span>{userPassword}</span>
-=======
-           <div> Your password: <span>{userPassword}</span></div>
->>>>>>> hardhat-bp-proj
               {/* </div> */}
           </div>
           <div className="home-body">
