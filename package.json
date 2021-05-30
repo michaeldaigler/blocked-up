@@ -38,6 +38,7 @@
   },
   "homepage": "https://github.com/symfoni/hardhat-react-boilerplate#readme",
   "dependencies": {
+    "@types/sjcl": "^1.0.29",
     "dotenv": "^10.0.0"
   }
 }

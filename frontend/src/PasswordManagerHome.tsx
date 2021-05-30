@@ -1,6 +1,7 @@
 
 import React, { ChangeEvent, useContext, useState } from "react";
-import {PasswordManagerContext} from "./hardhat/SymfoniContext"
+import { PasswordManagerContext } from "./hardhat/SymfoniContext"
+import BLockedUpLogo from "./assets/BlockedUpLogo.png"
 import "./PasswordManager.css"
 
 const PasswordManagerHome: React.FC = () => {
@@ -58,19 +59,21 @@ const PasswordManagerHome: React.FC = () => {
         <div className="app">
 
         <div className="home-container">
-        <div className="user-address">Hello: {accounts[0]}</div>
+                <div className="user-address">Hello: {accounts[0]}</div>
           <div className="password">
             {/* <div className="set-password-info-container"> */}
             <input className="password-input" type={inputType } value={userInputPassword} onChange={passwordInputChangedHandler} />
             <button onClick={showPasswordClicked}>Show Password</button>
             <button className="set-password-button" onClick={handleSetUserPassword}>Set password</button>
             <button onClick={getUserPassword}>Get Password</button>
-            <span>{userPassword }</span>
+            <span>{userPassword}</span>
               {/* </div> */}
           </div>
           <div className="home-body">
-          Welcome to B<strong>Locked Up</strong>
-          </div>
+            <p style={{width: "500px"}}>Welcome to B<strong>Locked Up</strong></p>
+            <img src={BLockedUpLogo }/>
+        </div>
+
         </div>
         {/* <div>Info: { tokenInfo !== null && tokenInfo.name}</div> */}
 

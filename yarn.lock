@@ -1041,6 +1041,11 @@
   "resolved" "https://registry.npmjs.org/@types/sinonjs__fake-timers/-/sinonjs__fake-timers-6.0.2.tgz"
   "version" "6.0.2"
 
+"@types/sjcl@^1.0.29":
+  "integrity" "sha512-gP9M7Oq4xAoDpuueWHeOTasccV4K6iFBEBPbR0tXejKT/e/Gkla0XcJ9REmgSCICt6y8/ubcvXFtiZ4ZLQ6BKA=="
+  "resolved" "https://registry.npmjs.org/@types/sjcl/-/sjcl-1.0.29.tgz"
+  "version" "1.0.29"
+
 "@types/underscore@*":
   "integrity" "sha512-T3NQD8hXNW2sRsSbLNjF/aBo18MyJlbw0lSpQHB/eZZtScPdexN4HSa8cByYwTw9Wy7KuOFr81mlDQcQQaZ79w=="
   "resolved" "https://registry.npmjs.org/@types/underscore/-/underscore-1.10.24.tgz"
